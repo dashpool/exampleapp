@@ -6,6 +6,7 @@ from plotly.utils import PlotlyJSONEncoder
 import pandas as pd
 from flask import Flask, request
 import os
+import time
 
 dash_url_base_pathname = os.environ.get("DASH_URL_BASE_PATHNAME", "/")
 
@@ -35,7 +36,7 @@ app.layout = html.Div([
     Output('graph-content', 'figure'),
     Input('dropdown-selection', 'value')
 )
-def update_graph(value):
+def update_graph(value): 
     dff = df[df.country==value]
     return px.line(dff, x='year', y='pop')
 
@@ -51,6 +52,7 @@ def update_config(newConfig):
 @app.server.route(dash_url_base_pathname + "plotApi", methods=['POST', 'GET'])
 def plotApi():
     config = request.get_json()
+    time.sleep(5.0)   
     if request.method == 'POST':
         fig = dxc.get_plot(df, config)
         return json.dumps(fig, cls=PlotlyJSONEncoder)
