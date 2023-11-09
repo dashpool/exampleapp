@@ -4,7 +4,8 @@ import plotly.express as px
 import json
 from plotly.utils import PlotlyJSONEncoder
 import pandas as pd
-from flask import Flask, request
+from flask import Flask, request, make_response
+import datetime
 import os
 import time
 
@@ -55,7 +56,12 @@ def plotApi():
     time.sleep(5.0)   
     if request.method == 'POST':
         fig = dxc.get_plot(df, config)
-        return json.dumps(fig, cls=PlotlyJSONEncoder)
+
+        # Create a response with an "Expires" header set to 15 minutes (900 seconds)
+        response = make_response(json.dumps(fig, cls=PlotlyJSONEncoder))
+        response.headers['Expires'] = (datetime.datetime.now() + datetime.timedelta(seconds=900)).strftime('%a, %d %b %Y %H:%M:%S GMT')
+        
+        return response
     return {}
 
 if __name__ == '__main__':
