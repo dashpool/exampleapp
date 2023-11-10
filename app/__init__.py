@@ -17,7 +17,8 @@ dash_url_base_pathname = os.environ.get("DASH_URL_BASE_PATHNAME", "/")
 server = Flask(__name__)
 app = Dash(__name__, server=server,
             external_stylesheets=["https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"],
-            use_pages=True
+            use_pages=True,
+            url_base_pathname=dash_url_base_pathname
 )
 
 app.layout = html.Div(page_container)

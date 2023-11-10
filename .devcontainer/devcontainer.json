@@ -15,6 +15,10 @@
 			"settings": {},
 			"extensions": []
 		}
+	},
+
+	"containerEnv": {
+		"DASH_URL_BASE_PATHNAME": "/example/"
 	}
 
 	// Use 'postCreateCommand' to run commands after the container is created.

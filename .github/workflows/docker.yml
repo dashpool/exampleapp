@@ -1,0 +1,24 @@
+name: Docker Images
+
+on:
+  release:
+    types: [created]
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Publish container
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: dashpool/exampleapp
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        workdir: .
+        tags: "${{ github.event.release.tag_name }}"

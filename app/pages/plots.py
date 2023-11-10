@@ -7,7 +7,7 @@ import app.data as data
 
 
 dash_url_base_pathname = os.environ.get("DASH_URL_BASE_PATHNAME", "/")
-register_page(__name__, path=dash_url_base_pathname + 'plots')
+register_page(__name__, path='/plots')
 
 layout = html.Div([
     html.H1(children='Example App', style={'textAlign':'center'}),
