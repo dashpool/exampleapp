@@ -21,7 +21,7 @@ layout = html.Div([
         ),
     dxc.Graph(
         id="fig",
-        meta=data.df_meta, plotApi=dash_url_base_pathname+"plotApi",
+        meta=data.df_meta,
         style={"height": "500px", "width": "100%"}
     )
 ])
