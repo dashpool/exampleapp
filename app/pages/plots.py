@@ -22,7 +22,8 @@ layout = html.Div([
     dxc.Graph(
         id="fig",
         meta=data.df_meta,
-        style={"height": "500px", "width": "100%"}
+        style={"height": "500px", "width": "100%"},
+        longCallback=True,
     )
 ])
 
