@@ -23,11 +23,10 @@ app = Dash(__name__, server=server,
 
 app.layout = html.Div(page_container)
 
-
 @app.server.route(dash_url_base_pathname + "plotApi", methods=['POST', 'GET'])
 def plotApi():
     config = request.get_json()
-    time.sleep(2.0)   
+    time.sleep(20.0)   
     if request.method == 'POST':
         fig = dxc.get_plot(data.df, config)
 
