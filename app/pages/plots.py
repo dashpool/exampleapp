@@ -13,6 +13,7 @@ layout = html.Div([
     html.H1(children='Example App', style={'textAlign':'center'}),
     dcc.Dropdown(data.df.country.unique(), 'Canada', id='dropdown-selection'),
     dcc.Graph(id='graph-content'),
+    dcc.Graph(id='graph-too'),
 
     dxc.Configurator(
             id="plotConfig",
@@ -29,11 +30,12 @@ layout = html.Div([
 
 @callback(
     Output('graph-content', 'figure'),
+    Output('graph-too', 'figure'),
     Input('dropdown-selection', 'value')
 )
 def update_graph(value): 
     dff = data.df[data.df.country==value]
-    return px.line(dff, x='year', y='pop')
+    return px.line(dff, x='year', y='pop'), px.scatter(dff, x='year', y='pop')
 
 @callback(
     Output('fig', 'defParams'),
