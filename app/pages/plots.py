@@ -3,6 +3,10 @@ from dash import html, dcc, callback, Output, Input, register_page
 import dash_express_components as dxc
 import plotly.express as px
 
+# Generate a very long random variable
+import numpy as np
+long_random_variable = np.random.rand(10, 10).tolist()
+
 import app.data as data
 
 
@@ -14,6 +18,7 @@ layout = html.Div([
     dcc.Dropdown(data.df.country.unique(), 'Canada', id='dropdown-selection'),
     dcc.Graph(id='graph-content'),
     dcc.Graph(id='graph-too'),
+    dcc.Store(id='long-random-variable-store', data=long_random_variable),
 
     dxc.Configurator(
             id="plotConfig",
