@@ -16,10 +16,10 @@ dash_url_base_pathname = os.environ.get("DASH_URL_BASE_PATHNAME", "/")
 
 server = Flask(__name__)
 app = Dash(__name__, server=server,
-            external_stylesheets=["https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"],
             use_pages=True,
             url_base_pathname=dash_url_base_pathname
 )
+
 
 app.layout = html.Div(page_container)
 
@@ -36,6 +36,20 @@ def plotApi():
         
         return response
     return {}
+
+
+@app.server.route(dash_url_base_pathname + "api", methods=['POST'])
+def api():
+    config = request.get_json()
+    time.sleep(20.0)   
+    if request.method == 'POST':
+
+        # Create a response with an "Expires" header set to 15 minutes (900 seconds)
+        response = make_response(json.dumps(data.df.to_dict("list")))
+        response.headers['Expires'] = (datetime.datetime.now() + datetime.timedelta(seconds=900)).strftime('%a, %d %b %Y %H:%M:%S GMT')
+        
+        return response
+    return {}    
 
 if __name__ == '__main__':
     app.run(debug=True)
