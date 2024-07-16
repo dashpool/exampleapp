@@ -2,7 +2,7 @@ from dash import Dash, html, page_container
 import dash_express_components as dxc
 import json
 from plotly.utils import PlotlyJSONEncoder
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, abort
 import datetime
 import os
 import time
@@ -50,6 +50,22 @@ def api():
         
         return response
     return {}    
+
+
+
+start_time = time.time()
+@app.server.route("/ready", methods=("GET", "POST"))
+def ready():
+    # for testing purpose, just return 503 for the first 60 seconds
+    if time.time() - start_time > 60:
+        return {}
+    else:
+        abort(503)
+
+@app.server.route("/health", methods=("GET", "POST"))
+def health():
+    return {}
+
 
 if __name__ == '__main__':
     app.run(debug=True)
