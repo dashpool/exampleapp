@@ -30,11 +30,7 @@ def plotApi():
     if request.method == 'POST':
         fig = dxc.get_plot(data.df, config)
 
-        # Create a response with an "Expires" header set to 15 minutes (900 seconds)
-        response = make_response(json.dumps(fig, cls=PlotlyJSONEncoder))
-        response.headers['Expires'] = (datetime.datetime.now() + datetime.timedelta(seconds=900)).strftime('%a, %d %b %Y %H:%M:%S GMT')
-        
-        return response
+        return dxc.make_response(fig)
     return {}
 
 
@@ -43,12 +39,8 @@ def api():
     config = request.get_json()
     time.sleep(20.0)   
     if request.method == 'POST':
-
-        # Create a response with an "Expires" header set to 15 minutes (900 seconds)
-        response = make_response(json.dumps(data.df.to_dict("list")))
-        response.headers['Expires'] = (datetime.datetime.now() + datetime.timedelta(seconds=900)).strftime('%a, %d %b %Y %H:%M:%S GMT')
         
-        return response
+        return dxc.make_response(data.df.to_dict("list"))
     return {}    
 
 
